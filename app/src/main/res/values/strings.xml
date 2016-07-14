@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Parking Pi</string>
+    <string name="google_api_key">AIzaSyArF3avQzRG_ddobYilkCHt7tO044ZIDmk</string>
+    <string name="custom_dialog_text">This parking location is currently unavailable\nPlease try after some time.</string>
+</resources>

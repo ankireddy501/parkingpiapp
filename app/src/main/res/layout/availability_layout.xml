@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="100dp"
+    android:orientation="horizontal"
+    android:background="@drawable/road"
+    android:weightSum="3"
+    android:divider="@null">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/left_panel">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
+                android:id="@+id/left_border"
+                android:src="@drawable/left_border" />
+
+            <ImageView
+                android:layout_width="250dp"
+                android:layout_height="200dp"
+                android:id="@+id/imageView3"
+                android:src="@drawable/car"
+                android:layout_marginTop="105dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P1"
+                android:textSize="21dp"
+                android:textColor="#E3A440"
+                android:textStyle="bold"
+                android:rotation="-60"
+                android:id="@+id/textView4"
+                android:layout_marginRight="23dp"
+                android:layout_marginEnd="23dp"
+                android:layout_alignBottom="@+id/imageView3"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="10dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/road03"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+
+     <LinearLayout
+         android:orientation="vertical"
+         android:layout_width="0dp"
+         android:layout_height="wrap_content"
+         android:layout_weight="1">
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:background="@drawable/right_panel">
+
+
+             <ImageView
+                 android:layout_width="wrap_content"
+                 android:layout_height="140dp"
+                 android:id="@+id/right_border"
+                 android:src="@drawable/right_border"
+                 android:layout_alignParentTop="true"
+                 android:layout_alignParentRight="true"
+                 android:layout_alignParentEnd="true" />
+
+             <ImageView
+                 android:layout_width="250dp"
+                 android:layout_height="200dp"
+                 android:id="@+id/imageView"
+                 android:src="@drawable/car1"
+                 android:layout_marginTop="106dp"
+                 android:layout_alignParentTop="true"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true" />
+
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="P1"
+                 android:textSize="21dp"
+                 android:textColor="#E3A440"
+                 android:textStyle="bold"
+                 android:rotation="60"
+                 android:id="@+id/textView"
+                 android:layout_marginLeft="18dp"
+                 android:layout_marginStart="18dp"
+                 android:layout_alignBottom="@+id/imageView"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"
+                 android:layout_marginBottom="10dp" />
+
+         </RelativeLayout>
+     </LinearLayout>
+</LinearLayout>
