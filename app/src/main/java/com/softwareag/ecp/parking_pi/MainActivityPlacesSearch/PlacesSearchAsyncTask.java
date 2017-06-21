@@ -1,6 +1,5 @@
 package com.softwareag.ecp.parking_pi.MainActivityPlacesSearch;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -15,8 +14,7 @@ import java.net.URL;
  * Created by KAVI on 07-07-2016.
  */
 public class PlacesSearchAsyncTask extends AsyncTask<String, String, String> {
-    String data = null;
-    Context context;
+    private String data = null;
 
     // Invoked by execute() method of this object
     @Override
@@ -60,7 +58,7 @@ public class PlacesSearchAsyncTask extends AsyncTask<String, String, String> {
             br.close();
 
         } catch (Exception e) {
-            Log.d("Exception while ", "downloading url" +e.toString());
+            Log.d("PlacesSearchAsyncTask", "downloading url" +e.toString());
         } finally {
             assert iStream != null;
             iStream.close();

@@ -19,23 +19,12 @@ import java.util.ArrayList;
  * Created by KAVI on 07-07-2016.
  */
 public class PlacesSearchJsonParser {
-    ArrayList<Places> placesArrayList;
 
-    public ArrayList<Places> getPlaces(String placeDatas)throws JSONException{
+    public ArrayList<Places> getPlaces(String placeData)throws JSONException{
+        JSONObject json = new JSONObject(placeData);
+        ArrayList<Places> placesArrayList = new ArrayList<>();
 
-        JSONObject json = new JSONObject(placeDatas);
-
-        return getPlaces(json);
-    }
-
-    public ArrayList<Places> getPlaces(JSONObject placesObj)throws JSONException{
-
-        if(placesObj == null){
-            return null;
-        }
-        placesArrayList = new ArrayList<Places>();
-
-        JSONArray placesAry = placesObj.getJSONArray("results");
+        JSONArray placesAry = json.getJSONArray("results");
 
         for(int i=0; i<placesAry.length(); i++){
             JSONObject placesJson = (JSONObject)placesAry.get(i);
@@ -49,21 +38,6 @@ public class PlacesSearchJsonParser {
             Places places = new Places(placeName, vicinity, lattitude, longitude, reference);
             placesArrayList.add(places);
         }
-
-
-
         return placesArrayList;
-    }
-
-    public void setMarkers(GoogleMap googleMap){
-
-        for(int i =0; i<placesArrayList.size(); i++){
-            Double lattitude = Double.parseDouble(placesArrayList.get(i).getLattitude());
-            Double longitude = Double.parseDouble(placesArrayList.get(i).getLongitude());
-            googleMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurants))
-                    .title(placesArrayList.get(i).getPlaceName())
-                    .position(new LatLng(lattitude, longitude)));
-        }
     }
 }

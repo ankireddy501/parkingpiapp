@@ -22,10 +22,10 @@ import java.util.List;
  * Created by KAVI on 22-06-2016.
  */
 public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
-    Activity context;
-    int locationListSize;
-    List<Locations> locationsList;
-    Dialog dialog;
+    private Activity context;
+    private int locationListSize;
+    private List<Locations> locationsList;
+    private Dialog dialog;
 
     public Parking_pi_ArrayAdapter(Activity context, int resource, List<Locations> locationsList){
         super(context, resource,R.layout.availability_layout, locationsList);
@@ -61,7 +61,7 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
 
         Locations locations = getItem(position);
         ViewHolder holder = new ViewHolder();
-        if (convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.availability_layout, parent, false);
             holder.car = (ImageView)convertView.findViewById(R.id.imageView3);
@@ -70,24 +70,20 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
             holder.car1 = (ImageView)convertView.findViewById(R.id.imageView);
             holder.availability1 = (TextView)convertView.findViewById(R.id.textView);
             convertView.setTag(holder);
-        }
-        else{
+        } else {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        if(!locations.isActive()){
-
+        if(!locations.isActive()) {
             dialog.show();
         }
-        if(locations.getStatus().equals("available")){
+        if(locations.getStatus().equals("available")) {
             holder.availability.setText(locations.getName());
-
             Drawable draw = holder.car.getDrawable();
             if (draw != null) {
                 holder.car.setImageDrawable(null);
             }
-        }
-        else{
+        } else {
             holder.car.setImageResource(R.drawable.car);
             holder.availability.setText(locations.getName());
         }
@@ -99,8 +95,7 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
             if (draw1 != null) {
                 holder.car1.setImageDrawable(null);
             }
-        }
-        else{
+        } else {
             holder.car1.setImageResource(R.drawable.car1);
             holder.availability1.setText(locations.getName1());
         }

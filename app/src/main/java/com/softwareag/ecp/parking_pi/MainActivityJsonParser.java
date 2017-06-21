@@ -7,30 +7,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by KAVI on 23-06-2016.
  */
 public class MainActivityJsonParser {
 
-    ArrayList<AllLocations> allLocationsArrayList;
-
-    public ArrayList<AllLocations> getAllLocations(String locationsJsonString)throws JSONException{
-
-        JSONObject locationsObj = new JSONObject(locationsJsonString);
-
-        return getAllLocations(locationsObj);
-    }
-
-    public ArrayList<AllLocations> getAllLocations(JSONObject locationsObj)throws JSONException{
-        if (locationsObj == null){
-            return null;
-        }
-        AllLocations allLocations = null;
-        allLocationsArrayList = new ArrayList<AllLocations>();
-
-        JSONArray locationAry = locationsObj.getJSONArray("locations");
-
+    public List<AllLocations> getAllLocations(String locationsJsonString)throws JSONException{
+        List<AllLocations> allLocationsArrayList = new ArrayList<>();
+        JSONArray locationAry = new JSONObject(locationsJsonString).getJSONArray("locations");
+        AllLocations allLocations;
         for(int i=0; i < locationAry.length(); i++){
             JSONObject locations = (JSONObject)locationAry.get(i);
             String name = locations.getString("name");
@@ -41,9 +28,7 @@ public class MainActivityJsonParser {
             boolean isActive = locations.getBoolean("active");
             allLocations = new AllLocations(name, lattitude, longitude, total, available, isActive);
             allLocationsArrayList.add(allLocations);
-
         }
-
         return allLocationsArrayList;
     }
 }

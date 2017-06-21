@@ -16,13 +16,11 @@ import java.util.ArrayList;
  */
 public class MainActivityArrayAdapter extends ArrayAdapter<Places>{
 
-    Activity context;
-    ArrayList<Places> placesArrayList;
+    private Activity context;
 
     public MainActivityArrayAdapter(Activity context, int resource, ArrayList<Places> placesArrayList) {
         super(context, R.layout.activity_main_listview_layout, placesArrayList);
         this.context = context;
-        this.placesArrayList = placesArrayList;
     }
 
     public class ViewHolder{
@@ -32,17 +30,15 @@ public class MainActivityArrayAdapter extends ArrayAdapter<Places>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         Places places = getItem(position);
         ViewHolder holder = new ViewHolder();
-        if (convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.activity_main_listview_layout, parent, false);
             holder.text1 = (TextView)convertView.findViewById(R.id.textView2);
             holder.text2 = (TextView)convertView.findViewById(R.id.textView3);
             convertView.setTag(holder);
-        }
-        else{
+        } else {
             holder = (ViewHolder)convertView.getTag();
         }
 
