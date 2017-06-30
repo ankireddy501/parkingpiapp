@@ -16,6 +16,11 @@ public class MainActivityJsonParser {
 
     public List<AllLocations> getAllLocations(String locationsJsonString)throws JSONException{
         List<AllLocations> allLocationsArrayList = new ArrayList<>();
+        
+        if(locationsJsonString  == null || locationsJsonString.length() == 0){
+            return  new ArrayList<>();
+        }
+        
         JSONArray locationAry = new JSONObject(locationsJsonString).getJSONArray("locations");
         AllLocations allLocations;
         for(int i=0; i < locationAry.length(); i++){
