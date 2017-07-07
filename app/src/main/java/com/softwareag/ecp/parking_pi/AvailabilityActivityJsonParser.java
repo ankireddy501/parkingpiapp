@@ -15,7 +15,13 @@ import java.util.ArrayList;
  */
 public class AvailabilityActivityJsonParser {
 
-    public ArrayList<Locations> getAvailability(String jsonString)throws JSONException {
+    private final String MESSAGE_LOG = "PARKING_PI APP";
+
+
+    public ArrayList<Locations> getAvailability(String jsonString) throws JSONException {
+
+        Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> getAvailability()");
+
         JSONObject json = new JSONObject(jsonString);
         ArrayList<Locations> locationsArrayList = new ArrayList<Locations>();
 
@@ -27,32 +33,30 @@ public class AvailabilityActivityJsonParser {
         boolean isActive = json.getBoolean("active");
         Locations locations = null;
         JSONArray array = json.getJSONArray("slots");
-        Log.v("AvailabilityActivity ","JsonParser array length "+array.length());
+        Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> JsonParser array length " + array.length());
 
-        for(int i=0; i<array.length(); i++){
-            JSONObject slots = (JSONObject)array.get(i);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject slots = (JSONObject) array.get(i);
             String name = slots.getString("name");
             String status = slots.getString("status");
             String ownerId = slots.getString("ownerId");
-            Log.v("Locations ","array list "+name+ " "+status+ " "+ownerId );
-
-            Log.v("value of ","i before increment "+i);
+            Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> array list " + name + " " + status + " " + ownerId);
+            Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> value of i before increment " + i);
             i = ++i;
-            Log.v("value of ","i after increment "+i);
+            Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> value of i after increment " + i);
 
-            JSONObject slots1 = (JSONObject)array.get(i);
+            JSONObject slots1 = (JSONObject) array.get(i);
             String name1 = slots1.getString("name");
             String status1 = slots1.getString("status");
             String ownerId1 = slots1.getString("ownerId");
 
-            Log.v("Locations ","array list "+name1+ " "+status1+ " "+ownerId1 );
-            locations = new Locations(branchName, lattitude, longitude, total, available,isActive,
+            Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> array list " + name1 + " " + status1 + " " + ownerId1);
+            locations = new Locations(branchName, lattitude, longitude, total, available, isActive,
                     name, status, ownerId,
                     name1, status1, ownerId1);
             locationsArrayList.add(locations);
         }
-
-        Log.v("JSON PARSER ","ARRAY LIST SIZE "+locationsArrayList.size());
+        Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> ARRAY LIST SIZE " + locationsArrayList.size());
         return locationsArrayList;
     }
 }

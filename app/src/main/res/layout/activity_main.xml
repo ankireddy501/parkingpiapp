@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:weightSum="3" tools:context=".SplashScreen"
     android:orientation="vertical"
-    android:weightSum="3" tools:context=".SplashScreen">
+    android:baselineAligned="false">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,7 +14,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
 
             <fragment
                 android:layout_width="match_parent"
@@ -40,18 +42,15 @@
                     android:layout_alignParentStart="true" />
             </RelativeLayout>
 
-
         </RelativeLayout>
     </LinearLayout>
 
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:id="@+id/listView2"
-            android:background="#FFFFFF"
-            android:layout_margin="15dp"
-            android:layout_weight="2" />
-
+    <ListView
+        android:id="@+id/placesData"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:layout_weight="2"
+        android:background="#FFFFFF" />
 
 </LinearLayout>

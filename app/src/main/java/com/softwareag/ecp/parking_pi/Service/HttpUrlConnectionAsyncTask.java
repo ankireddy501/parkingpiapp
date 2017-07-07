@@ -1,4 +1,4 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.Service;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -41,7 +41,7 @@ public class HttpUrlConnectionAsyncTask extends AsyncTask<String, String, String
             } else {
                 connection = (HttpURLConnection) (new URL("http://" + vmName + "/parkingmgmt/locations/" + branchName)).openConnection();
             }
-            Log.v("CONNECTION ", "URL " + connection);
+            Log.i("CONNECTION ", "URL " + connection);
             connection.setRequestMethod("GET");
             connection.setRequestProperty("x-CentraSite-APIKey", "63ca8580-4517-11e6-bbcf-af100b5ea29c");
             connection.setRequestProperty("Accept", "*/*");
@@ -54,10 +54,10 @@ public class HttpUrlConnectionAsyncTask extends AsyncTask<String, String, String
             while ((line = br.readLine()) != null) {
                 builder.append(line);
             }
-            Log.v("Http URL ", "Conection datas " + connection.getResponseCode());
+            Log.i("Http URL ", "Conection datas " + connection.getResponseCode());
             br.close();
             inputStream.close();
-            Log.v("Http URL ", "Conection datas " + builder.toString());
+            Log.i("Http URL ", "Conection datas " + builder.toString());
 
         } catch (Exception e) {
             Log.e("HttpUrlConnectionAsync", "Error in HttpUrlConnectionAsyncTask " + e.getMessage());

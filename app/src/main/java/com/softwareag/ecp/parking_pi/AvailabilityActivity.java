@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.softwareag.ecp.parking_pi.BeanClass.Locations;
+import com.softwareag.ecp.parking_pi.Service.UrlConnectionRunnable;
 
 import org.json.JSONException;
 
@@ -23,6 +24,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class AvailabilityActivity extends AppCompatActivity {
+
+    private final String MESSAGE_LOG = "PARKING_PI APP";
+
     private TimerTask timerTask;
     private Timer timer;
     private Parking_pi_ArrayAdapter arrayAdapter;
@@ -30,13 +34,18 @@ public class AvailabilityActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.i(MESSAGE_LOG, "AvailabilityActivity -> conCreate()");
+
         AvailabilityActivityJsonParser parser = new AvailabilityActivityJsonParser();
         ArrayList<Locations> locationsArrayList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability);
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        if(actionBar!= null){
+        if (actionBar != null) {
+
+            Log.i(MESSAGE_LOG, "AvailabilityActivity -> actionBar!=NULL");
             actionBar.setLogo(R.mipmap.ic_launcher);
             actionBar.setDisplayUseLogoEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
@@ -50,26 +59,28 @@ public class AvailabilityActivity extends AppCompatActivity {
         String locationBasedData = intent.getStringExtra("LocationBasedDatas");
 
         ListView listView = (ListView) findViewById(R.id.listView);
-        TextView textView = (TextView)findViewById(R.id.textView5);
+        TextView textView = (TextView) findViewById(R.id.textView5);
 
-        textView.setText(locationName +" "+address);
-        Log.v("AvailabilityActivity ","branchName "+ locationName);
+        textView.setText(locationName + " " + address);
+        Log.i("AvailabilityActivity ", "branchName " + locationName);
         try {
             if (locationBasedData == null) {
+                Log.i(MESSAGE_LOG, "AvailabilityActivity -> locationBasedData == null");
                 //Do what has to be done if it is null
                 return;
             }
             locationsArrayList = parser.getAvailability(locationBasedData);
             arrayAdapter = new Parking_pi_ArrayAdapter(AvailabilityActivity.this, 0, locationsArrayList);
             listView.setAdapter(arrayAdapter);
-        } catch (Exception e) {
-            Log.e("AvailabilityActivity", e.getMessage());
+        } catch (JSONException e) {
+            Log.e(MESSAGE_LOG, "AvailabilityActivity -> JSONException" + e.getMessage().toString());
         }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        Log.i(MESSAGE_LOG, "AvailabilityActivity -> onStart()");
         final Handler handler = new Handler();
         timer = new Timer();
         timerTask = new TimerTask() {
@@ -78,21 +89,18 @@ public class AvailabilityActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            UrlConnectionRunnable urlConnection = new UrlConnectionRunnable(
-                                    AvailabilityActivity.this, branchName );
-                            ExecutorService service = Executors.newFixedThreadPool(1);
-                            service.execute(urlConnection);
-                        } catch (Exception e) {
-                            Log.e("AvailabilityActivity", e.getMessage());
-                        }
+                        UrlConnectionRunnable urlConnection = new UrlConnectionRunnable(
+                                AvailabilityActivity.this, branchName);
+                        ExecutorService service = Executors.newFixedThreadPool(1);
+                        service.execute(urlConnection);
 
                         SharedPreferences preferences = PreferenceManager.
                                 getDefaultSharedPreferences(AvailabilityActivity.this);
-                        String newData = preferences.getString(branchName,null);
-                        Log.v("AvailabilityActivity ", "timer task datas  " + newData);
+                        String newData = preferences.getString(branchName, null);
+                        Log.i(MESSAGE_LOG, "AvailabilityActivity -> timer task datas" + newData);
 
-                        if(newData != null){
+                        if (newData != null) {
+                            Log.i(MESSAGE_LOG, "AvailabilityActivity -> timer task datas  " + newData);
                             refreshArrayAdapter(newData);
                         }
                     }
@@ -104,6 +112,7 @@ public class AvailabilityActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+        Log.i(MESSAGE_LOG, "AvailabilityActivity -> onPause()");
         super.onPause();
         timer.cancel();
         timerTask.cancel();
@@ -120,11 +129,10 @@ public class AvailabilityActivity extends AppCompatActivity {
          from the shared preference */
         editor.remove(branchName);
         editor.apply();
-
-        Log.v("AvailabilityActivity ", "paused ");
     }
 
     public void refreshArrayAdapter(String jsonString) {
+        Log.i(MESSAGE_LOG, "AvailabilityActivity -> refreshArrayAdapter()");
         try {
             AvailabilityActivityJsonParser parser = new AvailabilityActivityJsonParser();
             List<Locations> locationsList = parser.getAvailability(jsonString);
@@ -132,16 +140,22 @@ public class AvailabilityActivity extends AppCompatActivity {
             arrayAdapter.addAll(locationsList);
             arrayAdapter.notifyDataSetChanged();
         } catch (JSONException e) {
-            Log.e("AvailabilityActivity", "Error in refreshArrayAdapter : " + e.getMessage());
+            Log.e(MESSAGE_LOG, "AvailabilityActivity -> JSONException" + e.getMessage().toString());
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Log.i(MESSAGE_LOG, "AvailabilityActivity -> onOptionsItemSelected()");
+
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
         }
+
+        Log.i(MESSAGE_LOG, "AvailabilityActivity -> onOptionsItemSelected() -> " + super.onOptionsItemSelected(item));
         return super.onOptionsItemSelected(item);
+
     }
 }

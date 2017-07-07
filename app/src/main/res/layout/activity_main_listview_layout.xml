@@ -1,45 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="vertical">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ImageView
+        android:id="@+id/place_icon"
+        android:layout_marginLeft="50px"
+        android:layout_marginTop="20px"
+        android:layout_marginRight="50px"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/placeTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        android:weightSum="3">
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/place_icon"
+        android:gravity="center_vertical"
+        android:scrollHorizontally="false"
+        android:text="@string/placeTitle"
+        android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/placeSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/place_icon"
+        android:layout_alignBottom="@+id/placeTitle"
+        android:text="@string/placeSubTitle"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="0dp"
-            android:text="New Text"
-            android:textColor="#000000"
-            android:textSize="21dp"
-            android:id="@+id/textView2"
-            android:gravity="center_vertical"
-            android:layout_weight="1"/>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="New Text"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/textView3"
-            android:textSize="18dp"
-            android:gravity="center_vertical"
-            android:scrollHorizontally="false"
-            android:ellipsize="none"
-            android:lineSpacingExtra="4dp"
-            android:layout_weight="2" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

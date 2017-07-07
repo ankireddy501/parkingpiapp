@@ -15,6 +15,7 @@ import java.net.URL;
  */
 public class PlacesSearchAsyncTask extends AsyncTask<String, String, String> {
     private String data = null;
+    private final String MESSAGE_LOG = "PARKING_PI APP";
 
     // Invoked by execute() method of this object
     @Override
@@ -22,11 +23,10 @@ public class PlacesSearchAsyncTask extends AsyncTask<String, String, String> {
         try {
             data = downloadUrl(url[0]);
         } catch (Exception e) {
-            Log.d("Background Task", e.toString());
+            Log.d(MESSAGE_LOG, "PlacesSearchAsyncTask -> Background Task" + e.toString());
         }
         return data;
     }
-
 
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
@@ -56,9 +56,10 @@ public class PlacesSearchAsyncTask extends AsyncTask<String, String, String> {
             data = sb.toString();
 
             br.close();
+            Log.d(MESSAGE_LOG, "PlacesSearchAsyncTask -> JSON Data" + data);
 
         } catch (Exception e) {
-            Log.d("PlacesSearchAsyncTask", "downloading url" +e.toString());
+            Log.d(MESSAGE_LOG, "PlacesSearchAsyncTask downloading url" + e.toString());
         } finally {
             assert iStream != null;
             iStream.close();

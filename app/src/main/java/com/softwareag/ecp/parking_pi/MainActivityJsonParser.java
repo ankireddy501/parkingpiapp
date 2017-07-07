@@ -1,5 +1,7 @@
 package com.softwareag.ecp.parking_pi;
 
+import android.util.Log;
+
 import com.softwareag.ecp.parking_pi.BeanClass.AllLocations;
 
 import org.json.JSONArray;
@@ -14,17 +16,21 @@ import java.util.List;
  */
 public class MainActivityJsonParser {
 
-    public List<AllLocations> getAllLocations(String locationsJsonString)throws JSONException{
+    private final String MESSAGE_LOG = "PARKING_PI APP";
+
+    public List<AllLocations> getAllLocations(String locationsJsonString) throws JSONException {
+
+        Log.v(MESSAGE_LOG, "MainActivityJsonParser -> getAllLocations");
         List<AllLocations> allLocationsArrayList = new ArrayList<>();
-        
-        if(locationsJsonString  == null || locationsJsonString.length() == 0){
-            return  new ArrayList<>();
+
+        if (locationsJsonString == null || locationsJsonString.length() == 0) {
+            return new ArrayList<>();
         }
-        
+
         JSONArray locationAry = new JSONObject(locationsJsonString).getJSONArray("locations");
         AllLocations allLocations;
-        for(int i=0; i < locationAry.length(); i++){
-            JSONObject locations = (JSONObject)locationAry.get(i);
+        for (int i = 0; i < locationAry.length(); i++) {
+            JSONObject locations = (JSONObject) locationAry.get(i);
             String name = locations.getString("name");
             Double lattitude = locations.getDouble("lattitude");
             Double longitude = locations.getDouble("longitude");

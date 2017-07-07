@@ -2,7 +2,6 @@ package com.softwareag.ecp.parking_pi;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -22,33 +21,39 @@ import java.util.List;
  * Created by KAVI on 22-06-2016.
  */
 public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
+
+    private final String MESSAGE_LOG = "PARKING_PI APP";
+
     private Activity context;
     private int locationListSize;
     private List<Locations> locationsList;
     private Dialog dialog;
 
-    public Parking_pi_ArrayAdapter(Activity context, int resource, List<Locations> locationsList){
-        super(context, resource,R.layout.availability_layout, locationsList);
+    public Parking_pi_ArrayAdapter(Activity context, int resource, List<Locations> locationsList) {
+        super(context, resource, R.layout.availability_layout, locationsList);
         this.context = context;
+
+        Log.i(MESSAGE_LOG, "Parking_pi_ArrayAdapter -> Parking_pi_ArrayAdapter");
+
         locationListSize = locationsList.size();
         this.locationsList = locationsList;
 
         dialog = new Dialog(context);
-        int width = (int)(context.getResources().getDisplayMetrics().widthPixels*0.90);
-        int height = (int)(context.getResources().getDisplayMetrics().heightPixels*0.12);
+        int width = (int) (context.getResources().getDisplayMetrics().widthPixels * 0.90);
+        int height = (int) (context.getResources().getDisplayMetrics().heightPixels * 0.12);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.activity_error_page);
         dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setLayout(width, height);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        if(dialog.isShowing()){
+        if (dialog.isShowing()) {
             dialog.dismiss();
         }
     }
 
-    public class ViewHolder{
+    public class ViewHolder {
         ImageView car;
         TextView availability;
 
@@ -59,25 +64,26 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Log.i(MESSAGE_LOG, "Parking_pi_ArrayAdapter -> getView");
         Locations locations = getItem(position);
         ViewHolder holder = new ViewHolder();
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
             convertView = inflater.inflate(R.layout.availability_layout, parent, false);
-            holder.car = (ImageView)convertView.findViewById(R.id.imageView3);
-            holder.availability = (TextView)convertView.findViewById(R.id.textView4);
+            holder.car = (ImageView) convertView.findViewById(R.id.imageView3);
+            holder.availability = (TextView) convertView.findViewById(R.id.textView4);
 
-            holder.car1 = (ImageView)convertView.findViewById(R.id.imageView);
-            holder.availability1 = (TextView)convertView.findViewById(R.id.textView);
+            holder.car1 = (ImageView) convertView.findViewById(R.id.imageView);
+            holder.availability1 = (TextView) convertView.findViewById(R.id.textView);
             convertView.setTag(holder);
         } else {
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        if(!locations.isActive()) {
+        if (!locations.isActive()) {
             dialog.show();
         }
-        if(locations.getStatus().equals("available")) {
+        if (locations.getStatus().equals("available")) {
             holder.availability.setText(locations.getName());
             Drawable draw = holder.car.getDrawable();
             if (draw != null) {
@@ -88,7 +94,7 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
             holder.availability.setText(locations.getName());
         }
 
-        if(locations.getStatus1().equals("available")){
+        if (locations.getStatus1().equals("available")) {
             holder.availability1.setText(locations.getName1());
 
             Drawable draw1 = holder.car1.getDrawable();

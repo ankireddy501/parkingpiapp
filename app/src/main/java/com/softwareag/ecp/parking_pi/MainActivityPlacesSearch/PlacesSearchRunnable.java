@@ -16,6 +16,7 @@ import java.net.URL;
  * Created by KAVI on 07-07-2016.
  */
 public class PlacesSearchRunnable implements Runnable {
+    private final String MESSAGE_LOG = "PARKING_PI APP";
     private String url;
     private String data = null;
     private Activity context;
@@ -27,6 +28,7 @@ public class PlacesSearchRunnable implements Runnable {
 
     @Override
     public void run() {
+        Log.i(MESSAGE_LOG,"PlacesSearchRunnable -> run()");
         try {
             data = downloadUrl(url);
 
@@ -36,12 +38,13 @@ public class PlacesSearchRunnable implements Runnable {
             editor.apply();
 
         } catch (Exception e) {
-            Log.d("Background Task", e.toString());
+            Log.e(MESSAGE_LOG,"PlacesSearchRunnable -> run() -> Exception" + e.getMessage().toString());
         }
 
     }
 
     private String downloadUrl(String strUrl) throws IOException {
+        Log.i(MESSAGE_LOG,"PlacesSearchRunnable -> downloadUrl()");
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;

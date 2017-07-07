@@ -13,13 +13,17 @@ import android.widget.EditText;
 
 public class ChangeVMActivity extends AppCompatActivity {
 
+    private final String MESSAGE_LOG = "PARKING_PI APP";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i(MESSAGE_LOG, "ChangeVMActivity -> onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_vm);
         ActionBar actionBar = getSupportActionBar();
 
         if(actionBar!= null){
+            Log.i(MESSAGE_LOG, "ChangeVMActivity -> actionBar!= null");
             actionBar.setLogo(R.mipmap.ic_launcher);
             actionBar.setDisplayUseLogoEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
@@ -30,9 +34,10 @@ public class ChangeVMActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(MESSAGE_LOG, "ChangeVMActivity -> button.setOnClickListener");
                 String vmName = String.valueOf(editText.getText());
                 if(!vmName.isEmpty()) {
-                    Log.v("ChangeVMActivity ", vmName);
+                    Log.i(MESSAGE_LOG, "ChangeVMActivity -> !vmName.isEmpty()");
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeVMActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("VMName",vmName);
