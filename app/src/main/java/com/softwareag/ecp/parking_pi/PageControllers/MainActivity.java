@@ -1,4 +1,4 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.PageControllers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -33,12 +33,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.softwareag.ecp.parking_pi.BeanClass.AllLocations;
+import com.softwareag.ecp.parking_pi.BeanClass.AllLocation;
 import com.softwareag.ecp.parking_pi.BeanClass.Variables;
+import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.MainActivityJsonParser;
 import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.PlacesSearchAsyncTask;
 import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.PlacesSearchJsonParser;
+import com.softwareag.ecp.parking_pi.R;
 import com.softwareag.ecp.parking_pi.Service.AllLocationSearchService;
-import com.softwareag.ecp.parking_pi.Service.HttpUrlConnectionAsyncTask;
+import com.softwareag.ecp.parking_pi.Service.AvailabilityActivity;
+import com.softwareag.ecp.parking_pi.Service.URLLocationAccess;
+import com.softwareag.ecp.parking_pi.Service.URLLocationWithBranch;
 
 import org.json.JSONException;
 
@@ -55,12 +59,12 @@ public class MainActivity extends FragmentActivity implements
 
     private final String MESSAGE_LOG = "PARKING_PI APP";
 
-    private List<AllLocations> allLocationsArrayList;
+    private List<AllLocation> allLocationsArrayList;
     private TimerTask timertask;
     private Timer timer;
     private GoogleMap googleMaps;
     private GoogleApiClient apiClient;
-    private MainActivityArrayAdapter arrayAdapter;
+    private MainListViewLayout arrayAdapter;
     private ListView listView;
     private Marker mark;
 
@@ -69,7 +73,6 @@ public class MainActivity extends FragmentActivity implements
 
         Log.i(MESSAGE_LOG, "MainActivity -> onCreate");
 
-        HttpUrlConnectionAsyncTask connection = new HttpUrlConnectionAsyncTask(this, "");
         MainActivityJsonParser jsonParser = new MainActivityJsonParser();
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -96,11 +99,11 @@ public class MainActivity extends FragmentActivity implements
 
         String locations;
         try {
+            URLLocationAccess connection = new URLLocationAccess(this);
             locations = connection.execute().get();
             if (locations == null) {
                 Log.i(MESSAGE_LOG, "MainActivity -> locationEmpty");
-                Intent intent = new Intent(this, ErrorPage.class);
-                startActivity(intent);
+
             }
             allLocationsArrayList = jsonParser.getAllLocations(locations);
         } catch (JSONException e) {
@@ -117,9 +120,7 @@ public class MainActivity extends FragmentActivity implements
         // This will start the background timer task. It will refresh the connection for every 3.5sec and will save the
         // datas in shared preference
         Intent intent = new Intent(this, AllLocationSearchService.class);
-
         startService(intent);
-
     }
 
     @Override
@@ -127,7 +128,7 @@ public class MainActivity extends FragmentActivity implements
         this.googleMaps = googleMap;
         Log.i(MESSAGE_LOG, "MainActivity -> onMapReady " + allLocationsArrayList.size());
         for (int i = 0; i < allLocationsArrayList.size(); i++) {
-            AllLocations allLocations = allLocationsArrayList.get(i);
+            AllLocation allLocations = allLocationsArrayList.get(i);
             createMarker(allLocations.getName(), allLocations.getLattitude(),
                     allLocations.getLongitude(), allLocations.getTotal(),
                     allLocations.getAvailable(), allLocations.isActive(), googleMap);
@@ -139,7 +140,7 @@ public class MainActivity extends FragmentActivity implements
                 Log.i(MESSAGE_LOG, "MainActivity -> googleMap.setOnInfoWindowClickListener");
                 String location = marker.getTitle();
                 location = location.replaceAll(" ", "%20");
-                HttpUrlConnectionAsyncTask connection = new HttpUrlConnectionAsyncTask(MainActivity.this, location);
+                URLLocationWithBranch connectionWithBranch = new URLLocationWithBranch(MainActivity.this, location);
 
                 try {
                     Geocoder geocoder = new Geocoder(MainActivity.this);
@@ -152,7 +153,7 @@ public class MainActivity extends FragmentActivity implements
                     }
                     Log.i("ADDRESS ", " " + builder.toString());
 
-                    String data = connection.execute().get();
+                    String data = connectionWithBranch.execute().get();
                     if (data != null) {
                         Log.i("MainActivity ", "get datas based on selected location " + data);
                         Intent intent = new Intent(MainActivity.this, AvailabilityActivity.class);
@@ -164,7 +165,6 @@ public class MainActivity extends FragmentActivity implements
                 } catch (Exception e) {
                     Log.e(MESSAGE_LOG, "MainActivity -> googleMap.setOnInfoWindowClickListener -> Exception" + e.getMessage().toString());
                 }
-
 
             }
         });
@@ -195,8 +195,6 @@ public class MainActivity extends FragmentActivity implements
             public void onError(Status status) {
                 Log.e(MESSAGE_LOG, "MainActivity -> onError - Status " + status);
             }
-
-
         });
 
         if (allLocationsArrayList == null || allLocationsArrayList.size() == 0) {
@@ -258,7 +256,6 @@ public class MainActivity extends FragmentActivity implements
         super.onPause();
     }
 
-
     public void timerTask() {
         timer = new Timer();
         final Handler handler = new Handler();
@@ -274,7 +271,7 @@ public class MainActivity extends FragmentActivity implements
                         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                         String newData = preferences.getString("All locations", null);
 
-                        List<AllLocations> arrayList;
+                        List<AllLocation> arrayList;
                         MainActivityJsonParser jsonParser = new MainActivityJsonParser();
                         try {
                             arrayList = jsonParser.getAllLocations(newData);
@@ -290,16 +287,29 @@ public class MainActivity extends FragmentActivity implements
         timer.schedule(timertask, 400, 3500);
     }
 
-    public void refreshData(List<AllLocations> locationsArrayList) {
+    public void refreshData(List<AllLocation> arrayList) {
         // This will update the marker in the map for every 3.5 sec
         Log.v(MESSAGE_LOG, "MainActivity -> refreshData");
-        for (int i = 0; i < locationsArrayList.size(); i++) {
-            if (locationsArrayList.get(i).isActive()) {
-                mark.setPosition(new LatLng(locationsArrayList.get(i).getLattitude(),
-                        locationsArrayList.get(i).getLongitude()));
-                mark.setTitle(allLocationsArrayList.get(i).getName());
+        if (mark != null) {
+            for (AllLocation location : arrayList) {
+                if (location.isActive()) {
+                    mark.setPosition(new LatLng(location.getLattitude(),
+                            location.getLongitude()));
+                    mark.setTitle(location.getName());
+                }
+            }
+        } else {
+            boolean value = false;
+            if (value = false) {
+                Context context = getApplicationContext();
+                CharSequence text = "Server Connection Failed!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
+                value = true;
             }
         }
+
     }
 
     public void prepareListView(Double lattitude, Double longitude) {
@@ -310,14 +320,14 @@ public class MainActivity extends FragmentActivity implements
         try {
             String placeData = placesSearchAsyncTask.execute(sbValue.toString()).get();
             PlacesSearchJsonParser parser = new PlacesSearchJsonParser();
-            ArrayList<com.softwareag.ecp.parking_pi.BeanClass.Places> placesArrayList =
+            ArrayList<com.softwareag.ecp.parking_pi.BeanClass.Place> placesArrayList =
                     parser.getPlaces(placeData);
 
-            for (com.softwareag.ecp.parking_pi.BeanClass.Places photo : placesArrayList) {
+            for (com.softwareag.ecp.parking_pi.BeanClass.Place photo : placesArrayList) {
                 Log.d("PlacesData", photo.getPlaceName() + " " + photo.getPhoto_reference());
             }
 
-            arrayAdapter = new MainActivityArrayAdapter(MainActivity.this, 0, placesArrayList);
+            arrayAdapter = new MainListViewLayout(MainActivity.this, 0, placesArrayList);
             listView.setAdapter(arrayAdapter);
         } catch (JSONException e) {
             Log.e(MESSAGE_LOG, "MainActivity -> prepareListView Exception " + e.getMessage().toString());
@@ -330,7 +340,7 @@ public class MainActivity extends FragmentActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.i(MESSAGE_LOG, "MainActivity -> listView.setOnItemClickListener");
-                com.softwareag.ecp.parking_pi.BeanClass.Places selectedPlace =
+                com.softwareag.ecp.parking_pi.BeanClass.Place selectedPlace =
                         arrayAdapter.getItem(position);
                 Double lattitude = Double.parseDouble(selectedPlace.getLattitude());
                 Double longitude = Double.parseDouble(selectedPlace.getLongitude());
@@ -352,7 +362,7 @@ public class MainActivity extends FragmentActivity implements
         sb.append("&radius=500");
         sb.append("&sensor=true");
         sb.append("&key=").append(Variables.getGoogleApiKey());
-        Log.d(MESSAGE_LOG, "Google Places URL api: " + sb.toString());
+        Log.d(MESSAGE_LOG, "Google Place URL api: " + sb.toString());
         return sb;
     }
 

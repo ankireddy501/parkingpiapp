@@ -1,10 +1,12 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.PageControllers;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.softwareag.ecp.parking_pi.R;
 
 public class SplashScreen extends AppCompatActivity {
 

@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.softwareag.ecp.parking_pi.ChangeVMActivity">
+    tools:context="com.softwareag.ecp.parking_pi.PageControllers.ChangeVMActivity">
 
 
     <EditText
@@ -18,19 +18,22 @@
         android:background="@drawable/border"
         android:textCursorDrawable="@drawable/cursor_color"
         android:focusable="true"
-        android:hint="Enter your VM name with portno here"
+        android:hint="@string/vm_name"
         android:paddingLeft="10dp"
         android:layout_marginTop="15dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        tools:ignore="RtlSymmetry" />
 
     <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="55dp"
-        android:text="OK"
-        android:id="@+id/button"
-        android:background="@color/buttonColor"
-        android:textColor="#FFFFFF"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:layout_gravity="center_horizontal" />
+        android:background="@color/buttonColor"
+        android:elevation="0dp"
+        android:text="@string/connect"
+        android:textColor="#FFFFFF" />
 
 </LinearLayout>

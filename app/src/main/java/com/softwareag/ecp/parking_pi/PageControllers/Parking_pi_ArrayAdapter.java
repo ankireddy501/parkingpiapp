@@ -1,4 +1,4 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.PageControllers;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -13,24 +13,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.softwareag.ecp.parking_pi.BeanClass.Locations;
+import com.softwareag.ecp.parking_pi.BeanClass.Location;
+import com.softwareag.ecp.parking_pi.R;
 
 import java.util.List;
 
 /**
  * Created by KAVI on 22-06-2016.
  */
-public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
+public class Parking_pi_ArrayAdapter extends ArrayAdapter<Location> {
 
     private final String MESSAGE_LOG = "PARKING_PI APP";
 
     private Activity context;
     private int locationListSize;
-    private List<Locations> locationsList;
+    private List<Location> locationsList;
     private Dialog dialog;
 
-    public Parking_pi_ArrayAdapter(Activity context, int resource, List<Locations> locationsList) {
-        super(context, resource, R.layout.availability_layout, locationsList);
+    public Parking_pi_ArrayAdapter(Activity context, int resource, List<Location> locationsList) {
+        super(context, resource, locationsList);
         this.context = context;
 
         Log.i(MESSAGE_LOG, "Parking_pi_ArrayAdapter -> Parking_pi_ArrayAdapter");
@@ -65,7 +66,7 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Locations> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         Log.i(MESSAGE_LOG, "Parking_pi_ArrayAdapter -> getView");
-        Locations locations = getItem(position);
+        Location locations = getItem(position);
         ViewHolder holder = new ViewHolder();
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();

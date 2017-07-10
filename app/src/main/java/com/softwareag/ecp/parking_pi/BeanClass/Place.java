@@ -7,7 +7,7 @@ import java.net.URI;
 /**
  * Created by KAVI on 07-07-2016.
  */
-public class Places {
+public class Place {
     private String placeName;
     private String vicinity;
     private String lattitude;
@@ -16,7 +16,7 @@ public class Places {
     private String icon;
     private String photo_reference;
 
- /*   public Places(String placeName, String vicinity, String lattitude, String longitude, String reference, String icon, String photo_reference) {
+ /*   public Place(String placeName, String vicinity, String lattitude, String longitude, String reference, String icon, String photo_reference) {
         this.placeName = placeName;
         this.vicinity = vicinity;
         this.lattitude = lattitude;

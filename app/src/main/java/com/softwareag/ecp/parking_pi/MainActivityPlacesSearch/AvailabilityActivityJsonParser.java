@@ -1,8 +1,8 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.MainActivityPlacesSearch;
 
 import android.util.Log;
 
-import com.softwareag.ecp.parking_pi.BeanClass.Locations;
+import com.softwareag.ecp.parking_pi.BeanClass.Location;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,12 +18,12 @@ public class AvailabilityActivityJsonParser {
     private final String MESSAGE_LOG = "PARKING_PI APP";
 
 
-    public ArrayList<Locations> getAvailability(String jsonString) throws JSONException {
+    public ArrayList<Location> getAvailability(String jsonString) throws JSONException {
 
         Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> getAvailability()");
 
         JSONObject json = new JSONObject(jsonString);
-        ArrayList<Locations> locationsArrayList = new ArrayList<Locations>();
+        ArrayList<Location> locationsArrayList = new ArrayList<Location>();
 
         String branchName = json.getString("name");
         Double lattitude = json.getDouble("lattitude");
@@ -31,7 +31,7 @@ public class AvailabilityActivityJsonParser {
         int total = json.getInt("total");
         int available = json.getInt("available");
         boolean isActive = json.getBoolean("active");
-        Locations locations = null;
+        Location locations = null;
         JSONArray array = json.getJSONArray("slots");
         Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> JsonParser array length " + array.length());
 
@@ -51,7 +51,7 @@ public class AvailabilityActivityJsonParser {
             String ownerId1 = slots1.getString("ownerId");
 
             Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> array list " + name1 + " " + status1 + " " + ownerId1);
-            locations = new Locations(branchName, lattitude, longitude, total, available, isActive,
+            locations = new Location(branchName, lattitude, longitude, total, available, isActive,
                     name, status, ownerId,
                     name1, status1, ownerId1);
             locationsArrayList.add(locations);

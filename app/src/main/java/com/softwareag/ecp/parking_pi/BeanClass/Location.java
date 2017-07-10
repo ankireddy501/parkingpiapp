@@ -3,7 +3,7 @@ package com.softwareag.ecp.parking_pi.BeanClass;
 /**
  * Created by KAVI on 21-06-2016.
  */
-public class Locations {
+public class Location {
 
     private String branchName;
     private double lattitude;
@@ -21,12 +21,12 @@ public class Locations {
     private String status1;
     private String ownerId1;
 
-    public Locations(){
+    public Location(){
 
     }
-    public Locations(String branchName, double lattitude, double longitute, int total, int available, boolean isActive,
-                     String name, String status, String ownerId,
-                     String name1, String status1, String ownerId1){
+    public Location(String branchName, double lattitude, double longitute, int total, int available, boolean isActive,
+                    String name, String status, String ownerId,
+                    String name1, String status1, String ownerId1){
 
         this.branchName = branchName;
         this.lattitude = lattitude;

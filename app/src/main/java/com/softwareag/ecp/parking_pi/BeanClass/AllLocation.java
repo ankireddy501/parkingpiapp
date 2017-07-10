@@ -3,7 +3,7 @@ package com.softwareag.ecp.parking_pi.BeanClass;
 /**
  * Created by KAVI on 23-06-2016.
  */
-public class AllLocations {
+public class AllLocation {
     private String name;
     private Double lattitude;
     private Double longitude;
@@ -11,7 +11,7 @@ public class AllLocations {
     private int available;
     private boolean isActive;
 
-    public AllLocations(String name, Double lattitude, Double longitude, int total, int available, boolean isActive){
+    public AllLocation(String name, Double lattitude, Double longitude, int total, int available, boolean isActive){
         this.name = name;
         this.lattitude = lattitude;
         this.longitude = longitude;

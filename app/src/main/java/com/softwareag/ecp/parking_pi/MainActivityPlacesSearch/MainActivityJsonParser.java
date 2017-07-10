@@ -1,8 +1,8 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.MainActivityPlacesSearch;
 
 import android.util.Log;
 
-import com.softwareag.ecp.parking_pi.BeanClass.AllLocations;
+import com.softwareag.ecp.parking_pi.BeanClass.AllLocation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,17 +18,17 @@ public class MainActivityJsonParser {
 
     private final String MESSAGE_LOG = "PARKING_PI APP";
 
-    public List<AllLocations> getAllLocations(String locationsJsonString) throws JSONException {
+    public List<AllLocation> getAllLocations(String locationsJsonString) throws JSONException {
 
         Log.v(MESSAGE_LOG, "MainActivityJsonParser -> getAllLocations");
-        List<AllLocations> allLocationsArrayList = new ArrayList<>();
+        List<AllLocation> allLocationsArrayList = new ArrayList<>();
 
         if (locationsJsonString == null || locationsJsonString.length() == 0) {
             return new ArrayList<>();
         }
 
         JSONArray locationAry = new JSONObject(locationsJsonString).getJSONArray("locations");
-        AllLocations allLocations;
+        AllLocation allLocations;
         for (int i = 0; i < locationAry.length(); i++) {
             JSONObject locations = (JSONObject) locationAry.get(i);
             String name = locations.getString("name");
@@ -37,7 +37,7 @@ public class MainActivityJsonParser {
             int total = locations.getInt("total");
             int available = locations.getInt("available");
             boolean isActive = locations.getBoolean("active");
-            allLocations = new AllLocations(name, lattitude, longitude, total, available, isActive);
+            allLocations = new AllLocation(name, lattitude, longitude, total, available, isActive);
             allLocationsArrayList.add(allLocations);
         }
         return allLocationsArrayList;

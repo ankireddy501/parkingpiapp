@@ -1,5 +1,6 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.PageControllers;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.softwareag.ecp.parking_pi.R;
+
 public class ChangeVMActivity extends AppCompatActivity {
 
     private final String MESSAGE_LOG = "PARKING_PI APP";
@@ -21,26 +24,30 @@ public class ChangeVMActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_vm);
         ActionBar actionBar = getSupportActionBar();
-
-        if(actionBar!= null){
+        SharedPreferences preference;
+        if (actionBar != null) {
             Log.i(MESSAGE_LOG, "ChangeVMActivity -> actionBar!= null");
             actionBar.setLogo(R.mipmap.ic_launcher);
             actionBar.setDisplayUseLogoEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
         }
 
-        final EditText editText = (EditText)findViewById(R.id.editText);
-        Button button = (Button)findViewById(R.id.button);
+        final EditText editText = (EditText) findViewById(R.id.editText);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String vmName = preferences.getString("VMName", null);
+        editText.setText(vmName);
+
+        Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(MESSAGE_LOG, "ChangeVMActivity -> button.setOnClickListener");
                 String vmName = String.valueOf(editText.getText());
-                if(!vmName.isEmpty()) {
+                if (!vmName.isEmpty()) {
                     Log.i(MESSAGE_LOG, "ChangeVMActivity -> !vmName.isEmpty()");
                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ChangeVMActivity.this);
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("VMName",vmName);
+                    editor.putString("VMName", vmName);
                     editor.apply();
 
                     Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());

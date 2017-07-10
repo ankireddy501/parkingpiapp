@@ -24,14 +24,14 @@ public class AllLocationSearchService extends Service {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        UrlConnectionRunnable urlConnectionRunnable =
-                                new UrlConnectionRunnable(AllLocationSearchService.this,"");
+                        LocationAccessRunnable runnableConnection =
+                                new LocationAccessRunnable(AllLocationSearchService.this);
                         ExecutorService service = Executors.newFixedThreadPool(1);
-                        service.execute(urlConnectionRunnable);
+                        service.execute(runnableConnection);
 
                         SharedPreferences preferences = PreferenceManager
                                 .getDefaultSharedPreferences(AllLocationSearchService.this);
-                        String newData = preferences.getString("All locations", null);
+                        String newData = preferences.getString("all_locations", null);
                         Log.v("AllLocationSearch", "Service timer task" + newData);
                     }
                 });

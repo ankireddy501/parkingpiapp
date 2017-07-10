@@ -1,4 +1,4 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.Service;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,8 +11,10 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.softwareag.ecp.parking_pi.BeanClass.Locations;
-import com.softwareag.ecp.parking_pi.Service.UrlConnectionRunnable;
+import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.AvailabilityActivityJsonParser;
+import com.softwareag.ecp.parking_pi.BeanClass.Location;
+import com.softwareag.ecp.parking_pi.PageControllers.Parking_pi_ArrayAdapter;
+import com.softwareag.ecp.parking_pi.R;
 
 import org.json.JSONException;
 
@@ -38,7 +40,7 @@ public class AvailabilityActivity extends AppCompatActivity {
         Log.i(MESSAGE_LOG, "AvailabilityActivity -> conCreate()");
 
         AvailabilityActivityJsonParser parser = new AvailabilityActivityJsonParser();
-        ArrayList<Locations> locationsArrayList;
+        ArrayList<Location> locationsArrayList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability);
 
@@ -89,10 +91,10 @@ public class AvailabilityActivity extends AppCompatActivity {
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
-                        UrlConnectionRunnable urlConnection = new UrlConnectionRunnable(
+                        LocationWithBranchRunnable runnableConnection = new LocationWithBranchRunnable(
                                 AvailabilityActivity.this, branchName);
                         ExecutorService service = Executors.newFixedThreadPool(1);
-                        service.execute(urlConnection);
+                        service.execute(runnableConnection);
 
                         SharedPreferences preferences = PreferenceManager.
                                 getDefaultSharedPreferences(AvailabilityActivity.this);
@@ -135,7 +137,7 @@ public class AvailabilityActivity extends AppCompatActivity {
         Log.i(MESSAGE_LOG, "AvailabilityActivity -> refreshArrayAdapter()");
         try {
             AvailabilityActivityJsonParser parser = new AvailabilityActivityJsonParser();
-            List<Locations> locationsList = parser.getAvailability(jsonString);
+            List<Location> locationsList = parser.getAvailability(jsonString);
             arrayAdapter.clear();
             arrayAdapter.addAll(locationsList);
             arrayAdapter.notifyDataSetChanged();

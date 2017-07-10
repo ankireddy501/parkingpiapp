@@ -29,18 +29,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="140dp"
                 android:contentDescription="@string/symbolleft"
-                android:src="@drawable/left_border"
-                tools:ignore="ContentDescription" />
+                android:src="@drawable/right_border" />
+
+            <ImageView
+                android:id="@+id/left_flower"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
+                android:contentDescription="Decoration"
+                android:rotation="-30"
+                android:src="@drawable/flowers" />
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="250dp"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="105dp"
                 android:contentDescription="@string/carslotleft"
+                android:rotation="-60"
                 android:src="@drawable/car" />
 
             <TextView
@@ -53,23 +61,12 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="23dp"
                 android:layout_marginRight="23dp"
-                android:rotation="-60"
+                android:rotation="-50"
                 android:text="@string/p1"
                 android:textColor="#E3A440"
                 android:textSize="21sp"
                 android:textStyle="bold"
                 tools:ignore="RelativeOverlap" />
-
-            <ImageView
-                android:id="@+id/left_border_2"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:contentDescription="@string/symbolleft"
-                android:src="@drawable/left_border"
-                tools:ignore="ContentDescription"
-                android:layout_alignTop="@+id/textView4"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
 
 
         </RelativeLayout>
@@ -106,18 +103,28 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginBottom="10dp"
                 android:contentDescription="@string/symbolright"
-                android:src="@drawable/right_border" />
+                android:src="@drawable/left_border" />
+
+            <ImageView
+                android:id="@+id/right_flower"
+                android:layout_width="wrap_content"
+                android:layout_height="140dp"
+                android:contentDescription="Decoration"
+                android:rotation="30"
+                android:src="@drawable/flowers" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="250dp"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="106dp"
                 android:contentDescription="@string/carslotright"
+                android:rotation="60"
                 android:src="@drawable/car1" />
 
             <TextView
@@ -130,23 +137,12 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="18dp"
                 android:layout_marginStart="18dp"
-                android:rotation="60"
+                android:rotation="50"
                 android:text="@string/p2"
                 android:textColor="#E3A440"
                 android:textSize="21sp"
                 android:textStyle="bold"
                 tools:ignore="RelativeOverlap" />
-
-            <ImageView
-                android:id="@+id/right_border_2"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:contentDescription="@string/symbolright"
-                android:src="@drawable/right_border"
-                tools:ignore="ContentDescription"
-                android:layout_alignTop="@+id/textView"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
     </LinearLayout>

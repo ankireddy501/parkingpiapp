@@ -2,7 +2,6 @@
     <string name="app_name">Parking Pi</string>
     <string name="google_api_key">AIzaSyArF3avQzRG_ddobYilkCHt7tO044ZIDmk</string>
     <string name="custom_dialog_text">The Connection to the server failed.</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -101,8 +100,6 @@
     <string name="carslotleft">CarSlotLeft</string>
     <string name="symbolleft">SymbolLeft</string>
     <string name="symbolright">SymbolRight</string>
-    <string name="title_activity_main_page">MainPage</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="vm_name">localhost:8080</string>
+    <string name="connect">Connect</string>
 </resources>

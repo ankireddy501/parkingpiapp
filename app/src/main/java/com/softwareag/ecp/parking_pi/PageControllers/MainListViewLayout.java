@@ -1,9 +1,6 @@
-package com.softwareag.ecp.parking_pi;
+package com.softwareag.ecp.parking_pi.PageControllers;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,27 +9,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.softwareag.ecp.parking_pi.BeanClass.Places;
+import com.softwareag.ecp.parking_pi.BeanClass.Place;
 import com.softwareag.ecp.parking_pi.BeanClass.Variables;
-import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.LoadImage;
+import com.softwareag.ecp.parking_pi.R;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
  * Created by KAVI on 07-07-2016.
  */
-public class MainActivityArrayAdapter extends ArrayAdapter<Places> {
+public class MainListViewLayout extends ArrayAdapter<Place> {
 
     private final String MESSAGE_LOG = "PARKING_PI APP";
 
     private Activity context;
 
-    public MainActivityArrayAdapter(Activity context, int resource, ArrayList<Places> placesArrayList) {
+    public MainListViewLayout(Activity context, int resource, ArrayList<Place> placesArrayList) {
         super(context, R.layout.activity_main_listview_layout, placesArrayList);
         this.context = context;
-        Log.i(MESSAGE_LOG, "MainActivityArrayAdapter -> constructor");
+        Log.i(MESSAGE_LOG, "MainListViewLayout -> constructor");
     }
 
     public class ViewHolder {
@@ -43,8 +39,8 @@ public class MainActivityArrayAdapter extends ArrayAdapter<Places> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.i(MESSAGE_LOG, "MainActivityArrayAdapter -> getView");
-        Places places = getItem(position);
+        Log.i(MESSAGE_LOG, "MainListViewLayout -> getView");
+        Place places = getItem(position);
         ViewHolder holder = new ViewHolder();
         if (convertView == null) {
             LayoutInflater inflater = context.getLayoutInflater();
