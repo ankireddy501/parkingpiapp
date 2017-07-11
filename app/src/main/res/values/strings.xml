@@ -102,4 +102,5 @@
     <string name="symbolright">SymbolRight</string>
     <string name="vm_name">localhost:8080</string>
     <string name="connect">Connect</string>
+    <string name="decoration">Decoration</string>
 </resources>

@@ -10,7 +10,7 @@ public class Location {
     private double longitute;
     private int total;
     private int available;
-
+    private String layout;
     private boolean isActive;
 
     private String name;
@@ -21,12 +21,13 @@ public class Location {
     private String status1;
     private String ownerId1;
 
-    public Location(){
+    public Location() {
 
     }
+
     public Location(String branchName, double lattitude, double longitute, int total, int available, boolean isActive,
-                    String name, String status, String ownerId,
-                    String name1, String status1, String ownerId1){
+                    String layout, String name, String status, String ownerId, String name1, String status1,
+                    String ownerId1) {
 
         this.branchName = branchName;
         this.lattitude = lattitude;
@@ -34,7 +35,7 @@ public class Location {
         this.total = total;
         this.available = available;
         this.isActive = isActive;
-
+        this.layout = layout;
         this.name = name;
         this.status = status;
         this.ownerId = ownerId;
@@ -139,5 +140,13 @@ public class Location {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public String getLayout() {
+        return layout;
+    }
+
+    public void setLayout(String layout) {
+        this.layout = layout;
     }
 }

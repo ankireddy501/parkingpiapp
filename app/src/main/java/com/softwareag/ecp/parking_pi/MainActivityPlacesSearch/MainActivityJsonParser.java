@@ -37,7 +37,8 @@ public class MainActivityJsonParser {
             int total = locations.getInt("total");
             int available = locations.getInt("available");
             boolean isActive = locations.getBoolean("active");
-            allLocations = new AllLocation(name, lattitude, longitude, total, available, isActive);
+            String layout = locations.getString("layout");
+            allLocations = new AllLocation(name, lattitude, longitude, total, available, isActive, layout);
             allLocationsArrayList.add(allLocations);
         }
         return allLocationsArrayList;

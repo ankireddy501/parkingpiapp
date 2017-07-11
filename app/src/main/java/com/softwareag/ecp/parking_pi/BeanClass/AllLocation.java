@@ -9,15 +9,18 @@ public class AllLocation {
     private Double longitude;
     private int total;
     private int available;
+    private String layout;
     private boolean isActive;
 
-    public AllLocation(String name, Double lattitude, Double longitude, int total, int available, boolean isActive){
+    public AllLocation(String name, Double lattitude, Double longitude, int total, int available,
+                       boolean isActive, String layout) {
         this.name = name;
         this.lattitude = lattitude;
         this.longitude = longitude;
         this.total = total;
         this.available = available;
         this.isActive = isActive;
+        this.layout = layout;
     }
 
 
@@ -69,5 +72,11 @@ public class AllLocation {
         this.isActive = isActive;
     }
 
+    public String getLayout() {
+        return layout;
+    }
 
+    public void setLayout(String layout) {
+        this.layout = layout;
+    }
 }

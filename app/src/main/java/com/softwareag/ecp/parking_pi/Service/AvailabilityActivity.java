@@ -13,10 +13,12 @@ import android.widget.TextView;
 
 import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.AvailabilityActivityJsonParser;
 import com.softwareag.ecp.parking_pi.BeanClass.Location;
+import com.softwareag.ecp.parking_pi.PageControllers.LayoutView1;
 import com.softwareag.ecp.parking_pi.PageControllers.Parking_pi_ArrayAdapter;
 import com.softwareag.ecp.parking_pi.R;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,8 @@ public class AvailabilityActivity extends AppCompatActivity {
 
     private TimerTask timerTask;
     private Timer timer;
-    private Parking_pi_ArrayAdapter arrayAdapter;
+    private LayoutView1 layoutViewArrayAdapter;
+    private Parking_pi_ArrayAdapter parkingpiArrayAdapter;
     private String branchName;
 
     @Override
@@ -61,7 +64,7 @@ public class AvailabilityActivity extends AppCompatActivity {
         String locationBasedData = intent.getStringExtra("LocationBasedDatas");
 
         ListView listView = (ListView) findViewById(R.id.listView);
-        TextView textView = (TextView) findViewById(R.id.textView5);
+        TextView textView = (TextView) findViewById(R.id.addressBar);
 
         textView.setText(locationName + " " + address);
         Log.i("AvailabilityActivity ", "branchName " + locationName);
@@ -72,8 +75,21 @@ public class AvailabilityActivity extends AppCompatActivity {
                 return;
             }
             locationsArrayList = parser.getAvailability(locationBasedData);
-            arrayAdapter = new Parking_pi_ArrayAdapter(AvailabilityActivity.this, 0, locationsArrayList);
-            listView.setAdapter(arrayAdapter);
+
+            JSONObject json = new JSONObject(locationBasedData);
+
+            String layout =  json.getString("layout");
+
+            if (layout.equals("LISTVIEW")){
+                layoutViewArrayAdapter = new LayoutView1(AvailabilityActivity.this, 0, locationsArrayList);
+                listView.setAdapter(layoutViewArrayAdapter);
+            }else {
+                parkingpiArrayAdapter = new Parking_pi_ArrayAdapter(AvailabilityActivity.this, 0, locationsArrayList);
+                listView.setAdapter(parkingpiArrayAdapter);
+
+            }
+
+
         } catch (JSONException e) {
             Log.e(MESSAGE_LOG, "AvailabilityActivity -> JSONException" + e.getMessage().toString());
         }
@@ -138,9 +154,19 @@ public class AvailabilityActivity extends AppCompatActivity {
         try {
             AvailabilityActivityJsonParser parser = new AvailabilityActivityJsonParser();
             List<Location> locationsList = parser.getAvailability(jsonString);
-            arrayAdapter.clear();
-            arrayAdapter.addAll(locationsList);
-            arrayAdapter.notifyDataSetChanged();
+
+            JSONObject json = new JSONObject(jsonString);
+            String layout =  json.getString("layout");
+            if(layout.equals("LISTVIEW")){
+                layoutViewArrayAdapter.clear();
+                layoutViewArrayAdapter.addAll(locationsList);
+                layoutViewArrayAdapter.notifyDataSetChanged();
+            }else{
+                parkingpiArrayAdapter.clear();
+                parkingpiArrayAdapter.addAll(locationsList);
+                parkingpiArrayAdapter.notifyDataSetChanged();
+            }
+
         } catch (JSONException e) {
             Log.e(MESSAGE_LOG, "AvailabilityActivity -> JSONException" + e.getMessage().toString());
         }

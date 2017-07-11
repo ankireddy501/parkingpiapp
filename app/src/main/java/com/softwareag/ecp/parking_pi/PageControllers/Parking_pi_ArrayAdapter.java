@@ -73,7 +73,6 @@ public class Parking_pi_ArrayAdapter extends ArrayAdapter<Location> {
             convertView = inflater.inflate(R.layout.availability_layout, parent, false);
             holder.car = (ImageView) convertView.findViewById(R.id.imageView3);
             holder.availability = (TextView) convertView.findViewById(R.id.textView4);
-
             holder.car1 = (ImageView) convertView.findViewById(R.id.imageView);
             holder.availability1 = (TextView) convertView.findViewById(R.id.textView);
             convertView.setTag(holder);

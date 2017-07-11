@@ -239,8 +239,6 @@ public class MainActivity extends FragmentActivity implements
     public void onBackPressed() {
         Log.i(MESSAGE_LOG, "MainActivity -> onBackPressed");
         listView.setVisibility(View.GONE);
-        /*Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);*/
     }
 
     @Override

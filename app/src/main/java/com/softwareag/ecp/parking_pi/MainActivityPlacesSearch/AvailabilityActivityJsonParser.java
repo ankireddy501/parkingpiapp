@@ -31,6 +31,7 @@ public class AvailabilityActivityJsonParser {
         int total = json.getInt("total");
         int available = json.getInt("available");
         boolean isActive = json.getBoolean("active");
+        String layout = json.getString("layout");
         Location locations = null;
         JSONArray array = json.getJSONArray("slots");
         Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> JsonParser array length " + array.length());
@@ -51,9 +52,8 @@ public class AvailabilityActivityJsonParser {
             String ownerId1 = slots1.getString("ownerId");
 
             Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> array list " + name1 + " " + status1 + " " + ownerId1);
-            locations = new Location(branchName, lattitude, longitude, total, available, isActive,
-                    name, status, ownerId,
-                    name1, status1, ownerId1);
+            locations = new Location(branchName, lattitude, longitude, total, available, isActive, layout,
+                    name, status, ownerId, name1, status1, ownerId1);
             locationsArrayList.add(locations);
         }
         Log.i(MESSAGE_LOG, "AvailabilityActivityJsonParser -> ARRAY LIST SIZE " + locationsArrayList.size());
