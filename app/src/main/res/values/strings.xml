@@ -103,4 +103,7 @@
     <string name="vm_name">localhost:8080</string>
     <string name="connect">Connect</string>
     <string name="decoration">Decoration</string>
+    <string name="host_configuration">Host Settings: </string>
+    <string name="localhost">localhost</string>
+    <string name="publichost">Cloud</string>
 </resources>

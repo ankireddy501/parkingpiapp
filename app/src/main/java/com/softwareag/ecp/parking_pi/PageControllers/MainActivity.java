@@ -14,6 +14,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -67,6 +69,7 @@ public class MainActivity extends FragmentActivity implements
     private MainListViewLayout arrayAdapter;
     private ListView listView;
     private Marker mark;
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +78,7 @@ public class MainActivity extends FragmentActivity implements
 
         MainActivityJsonParser jsonParser = new MainActivityJsonParser();
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String vmName = preferences.getString("VMName", null);
 
         super.onCreate(savedInstanceState);
@@ -91,7 +94,9 @@ public class MainActivity extends FragmentActivity implements
                 .addOnConnectionFailedListener(this)
                 .build();
 
-        if (vmName == null || vmName.isEmpty()) {
+        Log.e(MESSAGE_LOG, "MainActivity -> VMNAME -> Oncreate ->" + preferences.getString("VMName", null));
+
+        if (vmName == null) {
             Log.i(MESSAGE_LOG, "MainActivity -> vmName == null || vmName.isEmpty()");
             Intent intent = new Intent(this, ChangeVMActivity.class);
             startActivity(intent);
@@ -266,7 +271,7 @@ public class MainActivity extends FragmentActivity implements
                         Log.v(MESSAGE_LOG, "MainActivity -> timerTask");
                         //Retrieves the data which has stored in the shared preference after refreshing the connection in
                         // the service class
-                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                        preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
                         String newData = preferences.getString("All locations", null);
 
                         List<AllLocation> arrayList;
@@ -409,6 +414,17 @@ public class MainActivity extends FragmentActivity implements
     public void onConnectionSuspended(int i) {
         Log.i(MESSAGE_LOG, "MainActivity -> onConnectionSuspended");
         Toast.makeText(MainActivity.this, "Connection failed ", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(MESSAGE_LOG, "Stopping Application");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+//        editor.remove("VMName").commit();
+        Log.i(MESSAGE_LOG, "VMNAME ->" + preferences.getString("VMName", null));
+
     }
 
 }

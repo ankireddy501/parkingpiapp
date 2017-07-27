@@ -32,15 +32,6 @@
                 android:src="@drawable/right_border" />
 
             <ImageView
-                android:id="@+id/left_flower"
-                android:layout_width="100dp"
-                android:layout_height="140dp"
-                android:contentDescription="Decoration"
-                android:layout_alignRight="@id/left_border"
-                android:rotation="-30"
-                android:src="@drawable/flowers" />
-
-            <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="250dp"
                 android:layout_height="150dp"
@@ -104,15 +95,6 @@
                 android:layout_marginBottom="10dp"
                 android:contentDescription="@string/symbolright"
                 android:src="@drawable/left_border" />
-
-            <ImageView
-                android:id="@+id/right_flower"
-                android:layout_width="100dp"
-                android:layout_height="140dp"
-                android:contentDescription="Decoration"
-                android:layout_alignLeft="@id/right_border"
-                android:rotation="30"
-                android:src="@drawable/flowers" />
 
             <ImageView
                 android:id="@+id/imageView"

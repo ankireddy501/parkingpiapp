@@ -52,7 +52,6 @@ public class LayoutView1 extends ArrayAdapter<Location> {
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
-
     }
 
     public class ViewHolder {

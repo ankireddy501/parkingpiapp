@@ -11,8 +11,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.AvailabilityActivityJsonParser;
 import com.softwareag.ecp.parking_pi.BeanClass.Location;
+import com.softwareag.ecp.parking_pi.MainActivityPlacesSearch.AvailabilityActivityJsonParser;
 import com.softwareag.ecp.parking_pi.PageControllers.LayoutView1;
 import com.softwareag.ecp.parking_pi.PageControllers.Parking_pi_ArrayAdapter;
 import com.softwareag.ecp.parking_pi.R;
@@ -46,10 +46,8 @@ public class AvailabilityActivity extends AppCompatActivity {
         ArrayList<Location> locationsArrayList;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_availability);
-
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-
             Log.i(MESSAGE_LOG, "AvailabilityActivity -> actionBar!=NULL");
             actionBar.setLogo(R.mipmap.ic_launcher);
             actionBar.setDisplayUseLogoEnabled(true);
@@ -86,9 +84,7 @@ public class AvailabilityActivity extends AppCompatActivity {
             }else {
                 parkingpiArrayAdapter = new Parking_pi_ArrayAdapter(AvailabilityActivity.this, 0, locationsArrayList);
                 listView.setAdapter(parkingpiArrayAdapter);
-
             }
-
 
         } catch (JSONException e) {
             Log.e(MESSAGE_LOG, "AvailabilityActivity -> JSONException" + e.getMessage().toString());
@@ -184,6 +180,5 @@ public class AvailabilityActivity extends AppCompatActivity {
 
         Log.i(MESSAGE_LOG, "AvailabilityActivity -> onOptionsItemSelected() -> " + super.onOptionsItemSelected(item));
         return super.onOptionsItemSelected(item);
-
     }
 }
